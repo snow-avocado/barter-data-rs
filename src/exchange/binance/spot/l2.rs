@@ -1,9 +1,6 @@
 use super::super::book::{l2::BinanceOrderBookL2Snapshot, BinanceLevel};
 use crate::{
-    error::DataError,
-    subscription::book::OrderBook,
-    transformer::book::{InstrumentOrderBook, OrderBookUpdater},
-    Identifier,
+    error::DataError, exchange::{Connector, ExchangeId}, subscription::book::OrderBook, transformer::book::{InstrumentOrderBook, OrderBookUpdater}, Identifier
 };
 use async_trait::async_trait;
 use barter_integration::{
@@ -19,6 +16,7 @@ use tokio::sync::mpsc;
 ///
 /// See docs: <https://binance-docs.github.io/apidocs/spot/en/#order-book>
 pub const HTTP_BOOK_L2_SNAPSHOT_URL_BINANCE_SPOT: &str = "https://api.binance.com/api/v3/depth";
+pub const HTTP_BOOK_L2_SNAPSHOT_URL_BINANCEUS_SPOT: &str = " https://www.binance.us/api/v1/depth";
 
 /// [`BinanceSpot`](super::BinanceSpot) OrderBook Level2 deltas WebSocket message.
 ///
@@ -161,13 +159,14 @@ impl OrderBookUpdater for BinanceSpotBookUpdater {
         instrument: Instrument,
     ) -> Result<InstrumentOrderBook<Self>, DataError>
     where
-        Exchange: Send,
+        Exchange: Connector + Send,
         Kind: Send,
     {
+
         // Construct initial OrderBook snapshot GET url
         let snapshot_url = format!(
             "{}?symbol={}{}&limit=100",
-            HTTP_BOOK_L2_SNAPSHOT_URL_BINANCE_SPOT,
+            if Exchange::ID == ExchangeId::BinanceUSSpot {HTTP_BOOK_L2_SNAPSHOT_URL_BINANCEUS_SPOT} else {HTTP_BOOK_L2_SNAPSHOT_URL_BINANCE_SPOT},
             instrument.base.as_ref().to_uppercase(),
             instrument.quote.as_ref().to_uppercase()
         );

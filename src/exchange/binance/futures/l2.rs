@@ -4,6 +4,7 @@ use crate::{
     subscription::book::OrderBook,
     transformer::book::{InstrumentOrderBook, OrderBookUpdater},
     Identifier,
+    exchange::Connector,
 };
 use async_trait::async_trait;
 use barter_integration::{
@@ -165,7 +166,7 @@ impl OrderBookUpdater for BinanceFuturesBookUpdater {
         instrument: Instrument,
     ) -> Result<InstrumentOrderBook<Self>, DataError>
     where
-        Exchange: Send,
+        Exchange: Connector + Send,
         Kind: Send,
     {
         // Construct initial OrderBook snapshot GET url

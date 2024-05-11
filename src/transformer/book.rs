@@ -32,7 +32,7 @@ where
         instrument: Instrument,
     ) -> Result<InstrumentOrderBook<Self>, DataError>
     where
-        Exchange: Send,
+        Exchange: Connector + Send,
         Kind: Send;
 
     /// Apply the [`Self::Update`] to the provided mutable [`Self::OrderBook`].

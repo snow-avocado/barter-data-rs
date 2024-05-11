@@ -172,6 +172,7 @@ pub struct PingInterval {
 pub enum ExchangeId {
     BinanceFuturesUsd,
     BinanceSpot,
+    BinanceUSSpot,
     Bitfinex,
     Bitmex,
     BybitSpot,
@@ -205,6 +206,7 @@ impl ExchangeId {
         match self {
             ExchangeId::BinanceSpot => "binance_spot",
             ExchangeId::BinanceFuturesUsd => "binance_futures_usd",
+            ExchangeId::BinanceUSSpot => "binanceus_spot",
             ExchangeId::Bitfinex => "bitfinex",
             ExchangeId::Bitmex => "bitmex",
             ExchangeId::BybitSpot => "bybit_spot",
