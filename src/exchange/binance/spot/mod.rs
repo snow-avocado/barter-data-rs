@@ -21,7 +21,7 @@ pub const WEBSOCKET_BASE_URL_BINANCE_SPOT: &str = "wss://stream.binance.com:9443
 pub type BinanceSpot = Binance<BinanceServerSpot>;
 
 /// See docs: <https://docs.binance.us/#general-websocket-api-information>
-pub const WEBSOCKET_BASE_URL_BINANCEUS_SPOT: &str = "wss://stream.binance.com:9443/ws";
+pub const WEBSOCKET_BASE_URL_BINANCEUS_SPOT: &str = "wss://stream.binance.us:9443/ws";
 
 
 pub type BinanceUSSpot = Binance<BinanceUSServerSpot>;
